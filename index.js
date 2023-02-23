@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 app.get('/characters', async (req, res) => {
     try {
       const response = await axios.get(apiUrl);
-      res.render('index', { response: response.data });
+      res.render('characters', { response: response.data });
     } catch (error) {
       console.error(error);
       res.status(500).send('An error occurred while fetching the response');
