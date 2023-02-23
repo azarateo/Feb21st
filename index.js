@@ -3,7 +3,7 @@ const axios = require('axios')
 app = express()
 app.set('view engine', 'ejs')
 app.set('views', './views')
-
+const apiUrl = 'https://swapi.dev/api/people/';
 app.get('/', function (req, res) {
     res.render('home')
 })
