@@ -1,5 +1,6 @@
 const express = require('express')
 const axios = require('axios')
+const mdburi = "mongodb+srv://azarate:PasswordForMDB@cluster0.hawtso5.mongodb.net/?retryWrites=true&w=majority"
 app = express()
 app.set('view engine', 'ejs')
 app.set('views', './views')
@@ -12,6 +13,9 @@ app.get('/characters', async (req, res) => {
     try {
       const response = await axios.get(apiUrl);
       res.render('characters', { response: response.data });
+      const connection = await mongoose.connect(mdburi);
+      console.log("connected to MongoDB")
+
     } catch (error) {
       console.error(error);
       res.status(500).send('An error occurred while fetching the response');
