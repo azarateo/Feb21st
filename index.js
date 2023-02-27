@@ -1,6 +1,7 @@
 const express = require('express')
 const axios = require('axios')
-const mdburi = "mongodb+srv://azarate:PasswordForMDB@cluster0.hawtso5.mongodb.net/?retryWrites=true&w=majority"
+const mongoose = require('mongoose')
+const mdburi = "mongodb+srv://azarate:MongoDBPassword123@cluster0.hawtso5.mongodb.net/?retryWrites=true&w=majority"
 app = express()
 app.set('view engine', 'ejs')
 app.set('views', './views')
@@ -13,6 +14,7 @@ app.get('/characters', async (req, res) => {
     try {
       const response = await axios.get(apiUrl);
       res.render('characters', { response: response.data });
+      mongoose.set('strictQuery', true);
       const connection = await mongoose.connect(mdburi);
       console.log("connected to MongoDB")
 
