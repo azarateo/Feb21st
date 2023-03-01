@@ -25,3 +25,7 @@ app.get('/characters', async (req, res) => {
         res.status(500).send('An error occurred while fetching the response');
     }
 });
+
+app.listen(3000, function () {
+    console.log("Running on port 3000.")
+})
