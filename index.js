@@ -1,7 +1,8 @@
 // Creating variables that imports express and axios to make them available in this app
 const express = require('express')
 const axios = require('axios')
-// Creating the object express and assigning it to the variable app so I can use express to instantiate the server
+const mongoose = require('mongoose')
+const mdburi = "mongodb+srv://azarate:MongoDBPassword123@cluster0.hawtso5.mongodb.net/?retryWrites=true&w=majority"
 app = express()
 // 
 app.set('view engine', 'ejs')
@@ -15,12 +16,12 @@ app.get('/characters', async (req, res) => {
     try {
         const response = await axios.get(apiUrl);
         res.render('characters', { response: response.data });
+        mongoose.set('strictQuery', true);
+        const connection = await mongoose.connect(mdburi);
+        console.log("connected to MongoDB")
+
     } catch (error) {
         console.error(error);
         res.status(500).send('An error occurred while fetching the response');
     }
 });
-
-app.listen(3000, () => {
-    console.log("Server started on port 3000.")
-})
