@@ -49,6 +49,21 @@ app.get('/characters', async (req, res) => {
     }
 });
 
+app.get('/charactersMongoDB', async (req, res) => {
+    try {
+        console.log("Attempting to find characters in MongoDB")
+        const connection = await mongoose.connect(mdburi);
+        console.log("connected to MongoDB")
+        const charactersMongoDB = await Character.find()
+        console.log("Characters found")
+        console.log(charactersMongoDB)
+        res.render('charactersMongoDB', { charactersMongoDB })
+    } catch (error) {
+        console.log(error)
+    }
+
+})
+
 app.listen(3000, function () {
     console.log("Running on port 3000.")
 })
