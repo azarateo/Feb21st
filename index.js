@@ -2,9 +2,19 @@
 const express = require('express')
 const axios = require('axios')
 const mongoose = require('mongoose')
-const mdburi = "mongodb+srv://azarate:MongoDBPassword123@cluster0.hawtso5.mongodb.net/?retryWrites=true&w=majority"
+const mdburi = "mongodb+srv://webdev:Bnds2023@cluster0.ymqk5yl.mongodb.net/?retryWrites=true&w=majority"
 app = express()
 // 
+
+const characterSchema = new mongoose.Schema(
+    {
+        name: String,
+        height: String,
+        mass: String
+    }
+)
+const Character = mongoose.model('Character', characterSchema)
+
 app.set('view engine', 'ejs')
 app.set('views', './views')
 const apiUrl = 'https://swapi.dev/api/people/';
@@ -19,6 +29,19 @@ app.get('/characters', async (req, res) => {
         mongoose.set('strictQuery', true);
         const connection = await mongoose.connect(mdburi);
         console.log("connected to MongoDB")
+        n = 0
+        for (const character of response.data.results) {
+            console.log(character)
+            const record = new Character({
+                name: character.name,
+                height: character.height,
+                mass: character.mass
+            })
+            n += 1
+            console.log("Attempting to save record ", n)
+            await record.save()
+            console.log("Record number ", n, " saved")
+        }
 
     } catch (error) {
         console.error(error);
