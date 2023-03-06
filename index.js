@@ -7,6 +7,7 @@ const mdburi = "mongodb+srv://webdev:Bnds2023@cluster0.ymqk5yl.mongodb.net/?retr
 // mongodb+srv://webdev:<password>@cluster0.ymqk5yl.mongodb.net/?retryWrites=true&w=majority
 app = express()
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname), public))
 // app.use(bodyParser.urlencoded({ extended: false }))
 // 
 
