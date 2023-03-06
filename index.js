@@ -2,8 +2,12 @@
 const express = require('express')
 const axios = require('axios')
 const mongoose = require('mongoose')
+// const bodyParser = require('body-parser')
 const mdburi = "mongodb+srv://webdev:Bnds2023@cluster0.ymqk5yl.mongodb.net/?retryWrites=true&w=majority"
+// mongodb+srv://webdev:<password>@cluster0.ymqk5yl.mongodb.net/?retryWrites=true&w=majority
 app = express()
+app.use(express.urlencoded({ extended: true }))
+// app.use(bodyParser.urlencoded({ extended: false }))
 // 
 
 const characterSchema = new mongoose.Schema(
@@ -48,6 +52,35 @@ app.get('/characters', async (req, res) => {
         res.status(500).send('An error occurred while fetching the response');
     }
 });
+
+app.get('/newCharacter', (req, res) => {
+    res.render('newCharacter')
+})
+
+app.post('/newCharacter', async (req, res) => {
+    try {
+        console.log("Creating a new character")
+        const newCharacter = new Character({
+            name: req.body.name,
+            height: req.body.height,
+            mass: req.body.mass
+        })
+        mongoose.set('strictQuery', true);
+        const connection = await mongoose.connect(mdburi);
+        console.log("connected to MongoDB")
+        console.log("Attempting to save a new record...")
+        newCharacter.save().then(() => {
+            console.log("New record saved")
+            res.redirect('/newCharacter')
+        }).catch(err => console.log(err))
+
+    } catch (error) {
+        console.log(error)
+        res.send("Error while saving the character")
+    }
+
+
+})
 
 app.get('/charactersMongoDB', async (req, res) => {
     try {
