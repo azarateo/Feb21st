@@ -2,12 +2,13 @@
 const express = require('express')
 const axios = require('axios')
 const mongoose = require('mongoose')
+const path = require('path')
 // const bodyParser = require('body-parser')
 const mdburi = "mongodb+srv://webdev:Bnds2023@cluster0.ymqk5yl.mongodb.net/?retryWrites=true&w=majority"
 // mongodb+srv://webdev:<password>@cluster0.ymqk5yl.mongodb.net/?retryWrites=true&w=majority
 app = express()
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname), public))
+app.use(express.static(path.join(__dirname, '/public')))
 // app.use(bodyParser.urlencoded({ extended: false }))
 // 
 
