@@ -4,7 +4,11 @@
         <ul>
             <% charactersMongoDB.forEach( function(character){ %>
                 <li>
-                    <%=character.name%>
+                    <%=character._id%>
+                        <%=character.name%>
+                            <%=character.height%>
+                                <%=character.mass%>
+                                    <%=character.__v%>
                 </li>
                 <% }) %>
         </ul>
